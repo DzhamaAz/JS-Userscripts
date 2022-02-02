@@ -31,7 +31,8 @@
         // "ytp-caption-window-container",
         "ytp-gradient-bottom",
         "ytp-gradient-top",
-        "ytp-chrome-bottom"
+        "ytp-chrome-bottom",
+        "ytp-chrome-top-buttons"
     ];
 
     let displayFlag = true;
