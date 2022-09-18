@@ -8,41 +8,46 @@
 // ==/UserScript==
 
 (function() {
-    'use strict';
     function hideElement(element) {
-        let DOMelement = document.getElementsByClassName(element)[0] || document.getElementById(element);
+        let DOMelement = document.getElementsByClassName(element.name)[0] || document.getElementById(element.name);
+        if (!element.defaultState) {
+            let state = DOMelement.style.display;
+            element.defaultState = state;
+        }
         DOMelement.style.display = "none";
     }
     function unhideElement(element) {
-        let DOMelement = document.getElementsByClassName(element)[0] || document.getElementById(element);
-        DOMelement.style.display = "";
+        let DOMelement = document.getElementsByClassName(element.name)[0] || document.getElementById(element.name);
+        DOMelement.style.display = element.defaultState;
     }
-    function hideAllElements(elementsArray) {
+    function hideElementArray(elementsArray) {
         elementsArray.forEach(element => {
             hideElement(element);
         });
     }
-    function unhideAllElements(elementsArray) {
+    function unhideElementArray(elementsArray) {
         elementsArray.forEach(element => {
             unhideElement(element);
         });
     }
+    
     const ELEMENTS = [
-        // "ytp-caption-window-container",
-        "ytp-gradient-bottom",
-        "ytp-gradient-top",
-        "ytp-chrome-bottom",
-        "ytp-chrome-top-buttons"
+        // { name: "ytp-caption-window-container", defaultState: null },
+        { name: "ytp-gradient-bottom", defaultState: null },
+        { name: "ytp-gradient-top", defaultState: null },
+        { name: "ytp-chrome-bottom", defaultState: null },
+        { name: "annotation annotation-type-custom iv-branding", defaultState: null },
+        { name: "ytp-chrome-top", defaultState: null }
     ];
-
     let displayFlag = true;
+
     document.onkeydown = function(key) {
         if (key.altKey && key.key == "t") {
             if (displayFlag) {
-                hideAllElements(ELEMENTS);
+                hideElementArray(ELEMENTS);
                 displayFlag = false;
             } else {
-                unhideAllElements(ELEMENTS);
+                unhideElementArray(ELEMENTS);
                 displayFlag = true;
             }
         }
